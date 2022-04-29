@@ -6,8 +6,9 @@ import java.util.List;
 
 import com.fatec.campeonatopaulista.models.Jogo;
 import com.fatec.campeonatopaulista.persistence.JogoDAO;
-import com.fatec.campeonatopaulista.persistence.JogoDAOFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/jogos")
 @Controller
 public class JogoController {
+	@Qualifier("sqlServerJogoDAO")
 	private JogoDAO jogoDAO;
 
-	public JogoController() {
-		super();
-		try {
-			this.jogoDAO = JogoDAOFactory.create();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private static final String GRUPO_DE_RECURSOS = "jogos";
+
+	@Autowired
+	public JogoController(JogoDAO jogoDAO) {
+		this.jogoDAO = jogoDAO;
 	}
 
 	@GetMapping("/resultados")
@@ -36,7 +36,7 @@ public class JogoController {
 		var destino = existeDataDoJogo ? "redirect:/jogos" : "resultados-dos-jogos";
 
 		var viewModel = new ModelAndView(destino);
-		viewModel.addObject("jogos", jogoDAO.findAllByDate(dataDoJogo));
+		viewModel.addObject(GRUPO_DE_RECURSOS, jogoDAO.findAllByDate(dataDoJogo));
 
 		return viewModel;
 	}
@@ -50,9 +50,9 @@ public class JogoController {
 			jogos = this.jogoDAO.findAllByDate(dataDoJogo);
 		}
 
-		model.addAttribute("jogos", jogos);
+		model.addAttribute(GRUPO_DE_RECURSOS, jogos);
 		model.addAttribute("dataDoJogo", existeDataDoJogo ? dataDoJogo : "");
-		return "jogos";
+		return GRUPO_DE_RECURSOS;
 	}
 
 	@PostMapping("")

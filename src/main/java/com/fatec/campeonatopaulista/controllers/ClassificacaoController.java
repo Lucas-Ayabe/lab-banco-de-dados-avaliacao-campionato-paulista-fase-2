@@ -1,8 +1,9 @@
 package com.fatec.campeonatopaulista.controllers;
 
 import com.fatec.campeonatopaulista.services.GrupoService;
-import com.fatec.campeonatopaulista.services.GrupoServiceFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/classificacao")
 @Controller
 public class ClassificacaoController {
+	@Qualifier("sqlServerGrupoService")
 	private GrupoService grupoService;
 
-	public ClassificacaoController() {
-		super();
-
-		try {
-			this.grupoService = GrupoServiceFactory.create();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+	@Autowired
+	public ClassificacaoController(GrupoService grupoService) {
+		this.grupoService = grupoService;
 	}
 
 	@GetMapping("/geral")
