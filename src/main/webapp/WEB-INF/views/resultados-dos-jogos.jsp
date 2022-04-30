@@ -26,7 +26,7 @@
     		</div>
     	</header>
     	<main class="container pt-0">
-			<form method="POST" action="/jogos/resultados">
+			<form method="POST">
 				<c:choose>
 					<c:when test="${!jogos.isEmpty()}">
 						<figure>

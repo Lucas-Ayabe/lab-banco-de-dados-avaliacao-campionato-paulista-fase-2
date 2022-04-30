@@ -31,7 +31,7 @@
 			<c:choose>
 				<c:when test="${!times.isEmpty()}">
                     <figure>
-                        <table>
+                        <table class="is-geral-results">
                             <caption>Times</caption>
                             <thead>
                                 <tr>
@@ -47,17 +47,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="time" items="${times}">
+                                <c:forEach var="resultado" items="${times}">
                                     <tr>
-                                        <td><c:out value="${time.getNome()}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
-                                        <td><c:out value="${0}"></c:out></td>
+                                        <td>${resultado.getTime()}</td>
+                                        <td>${resultado.getJogosDisputados()}</td>
+                                        <td>${resultado.getVitorias()}</td>
+                                        <td>${resultado.getEmpates()}</td>
+                                        <td>${resultado.getDerrotas()}</td>
+                                        <td>${resultado.getGolsMarcados()}</td>
+                                        <td>${resultado.getGolsSofridos()}</td>
+                                        <td>${resultado.getSaldoDeGols()}</td>
+                                        <td>${resultado.getPontos()}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

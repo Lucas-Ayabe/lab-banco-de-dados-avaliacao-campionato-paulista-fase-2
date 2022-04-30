@@ -49,7 +49,7 @@
 								</thead>
 								<tbody>
 									<c:forEach var="resultado" items="${resultadoDoGrupo.getResultados()}">
-										<tr>
+										<tr class='${rebaixados.contains(resultado.getTime()) ? "is-in-relegation-zone" : ""}'>
 											<td>${resultado.getTime()}</td>
 											<td>${resultado.getJogosDisputados()}</td>
                                             <td>${resultado.getVitorias()}</td>

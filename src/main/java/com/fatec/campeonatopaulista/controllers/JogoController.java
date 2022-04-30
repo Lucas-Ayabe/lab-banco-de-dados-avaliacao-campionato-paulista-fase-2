@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fatec.campeonatopaulista.models.Jogo;
 import com.fatec.campeonatopaulista.persistence.JogoDAO;
+import com.fatec.campeonatopaulista.services.JogoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,11 +24,14 @@ public class JogoController {
 	@Qualifier("sqlServerJogoDAO")
 	private JogoDAO jogoDAO;
 
+	private JogoService jogoService;
+
 	private static final String GRUPO_DE_RECURSOS = "jogos";
 
 	@Autowired
-	public JogoController(JogoDAO jogoDAO) {
+	public JogoController(JogoDAO jogoDAO, JogoService jogoService) {
 		this.jogoDAO = jogoDAO;
+		this.jogoService = jogoService;
 	}
 
 	@GetMapping("/resultados")
@@ -36,9 +40,27 @@ public class JogoController {
 		var destino = existeDataDoJogo ? "redirect:/jogos" : "resultados-dos-jogos";
 
 		var viewModel = new ModelAndView(destino);
-		viewModel.addObject(GRUPO_DE_RECURSOS, jogoDAO.findAllByDate(dataDoJogo));
+		viewModel.addObject(GRUPO_DE_RECURSOS, jogoDAO.encontrarTodosPelaData(dataDoJogo));
 
 		return viewModel;
+	}
+
+	@GetMapping("/quartas-de-final")
+	protected ModelAndView quartasDeFinal() {
+		var viewModel = new ModelAndView("quartas-de-final");
+		viewModel.addObject(GRUPO_DE_RECURSOS, jogoDAO.listarQuartasDeFinal());
+		return viewModel;
+	}
+
+	@PostMapping(value = "/resultados")
+	public ModelAndView registrarResultados(
+			@RequestParam("dataDoJogo") String dataDoJogo,
+			@RequestParam("codigo[]") List<Integer> codigos,
+			@RequestParam("golsTimeA[]") List<Integer> golsDosTimesA,
+			@RequestParam("golsTimeB[]") List<Integer> golsDosTimesB) {
+		jogoService.registrarResultados(
+				codigos, golsDosTimesA, golsDosTimesB);
+		return new ModelAndView("redirect:/jogos/resultados?dataDoJogo=" + dataDoJogo);
 	}
 
 	@GetMapping("")
@@ -47,7 +69,7 @@ public class JogoController {
 		var existeDataDoJogo = dataDoJogo != null;
 
 		if (existeDataDoJogo) {
-			jogos = this.jogoDAO.findAllByDate(dataDoJogo);
+			jogos = this.jogoDAO.encontrarTodosPelaData(dataDoJogo);
 		}
 
 		model.addAttribute(GRUPO_DE_RECURSOS, jogos);
@@ -56,9 +78,9 @@ public class JogoController {
 	}
 
 	@PostMapping("")
-	protected String sortear() {
+	protected String embaralhar() {
 		try {
-			this.jogoDAO.sort();
+			this.jogoDAO.embaralhar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -45,7 +45,7 @@
 								</thead>
 								<tbody>
 									<c:forEach var="time" items="${grupo.getTimes()}">
-										<tr>
+										<tr class='${rebaixados.contains(time.getNome()) ? "is-in-relegation-zone" : ""}'>
 											<td><c:out value="${time.getCodigo()}"></c:out></td>
 											<td><c:out value="${time.getNome()}"></c:out></td>
 											<td><c:out value="${time.getCidade()}"></c:out></td>

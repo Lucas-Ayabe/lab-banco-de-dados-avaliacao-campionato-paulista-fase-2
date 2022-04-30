@@ -20,6 +20,10 @@ public class Jogo {
 		this.dataDoJogo = dataDoJogo;
 	}
 
+	public Jogo(int codigo, String timeA, String timeB) {
+		this(codigo, timeA, timeB, 0, 0, null);
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}

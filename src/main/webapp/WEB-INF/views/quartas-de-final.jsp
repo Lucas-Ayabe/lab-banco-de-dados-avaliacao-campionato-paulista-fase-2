@@ -30,25 +30,15 @@
     	<main class="container pt-0">
 			<c:choose>
 				<c:when test="${!jogos.isEmpty()}">
-                    <figure>
-                        <table>
-                            <caption>Jogos</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Time A</th>
-                                    <th scope="col">Time B</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="jogo" items="${jogos}">
-                                    <tr>
-                                        <td><c:out value="${jogo.getNomeDoTimeA()}"></c:out></td>
-                                        <td><c:out value="${jogo.getNomeDoTimeB()}"></c:out></td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </figure>
+                    <div class="stack">
+                        <c:forEach var="jogo" items="${jogos}">
+                            <article class="match grid">
+                                <div class="team"><c:out value="${jogo.getNomeDoTimeA()}"></c:out></div>
+                                <div class="versus">VS</div>
+                                <div class="team"><c:out value="${jogo.getNomeDoTimeB()}"></c:out></div>
+                            </article>
+                        </c:forEach>
+                    </div>
 				</c:when>
 				<c:otherwise>
 					<p>Sem previsão ainda.</p>

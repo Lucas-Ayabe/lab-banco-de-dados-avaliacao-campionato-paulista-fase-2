@@ -51,7 +51,7 @@ public class SQLServerResultadoDAO implements ResultadoDAO {
 
 	@Override
 	public List<Resultado> procurarResultadosGerais() {
-		var sql = "SELECT * FROM dbo.fn_calcular_resultados_gerais()";
+		var sql = "SELECT * FROM dbo.fn_calcular_resultados_gerais() ORDER BY pontos DESC, vitorias DESC, gols_marcados DESC, saldo_gols DESC";
 		try (var stmt = connection.prepareStatement(sql)) {
 			return mapearLinhasEmResultados(stmt.executeQuery());
 		} catch (Exception e) {

@@ -68,3 +68,30 @@ caption {
 	flex: 1 0 250px;
 	margin-bottom: 0;
 }
+
+.is-geral-results tbody tr:nth-last-child(1) td,
+.is-geral-results tbody tr:nth-last-child(2) td,
+.is-in-relegation-zone td {
+	color: #f00;
+}
+
+.match {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	padding: 1.5em 3em;
+	margin: 0;
+	margin-block: 1.5em;
+}
+
+.match .team {
+	font-size: 1.125em;
+}
+
+.match .versus {
+	font-weight: bold;
+	text-align: center;
+}
+
+.match .team:nth-child(3) {
+	text-align: right;
+}

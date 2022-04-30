@@ -22,8 +22,10 @@ public class GrupoController {
 
 	@GetMapping("")
 	protected String listar(Model model) {
-		var grupos = this.grupoService.listarGrupos();
+		var grupos = grupoService.listarGrupos();
+		var rebaixados = resultadoService.listarTimesRebaixados();
 		model.addAttribute(GRUPO_DE_RECURSOS, grupos);
+		model.addAttribute("rebaixados", rebaixados);
 		return GRUPO_DE_RECURSOS;
 	}
 
@@ -31,6 +33,7 @@ public class GrupoController {
 	protected String listarResultados(Model model) {
 		var resultados = resultadoService.listarResultadosDosGrupos();
 		model.addAttribute("resultadosDosGrupos", resultados);
+		model.addAttribute("rebaixados", resultadoService.listarTimesRebaixados());
 		return "resultados-dos-grupos";
 	}
 

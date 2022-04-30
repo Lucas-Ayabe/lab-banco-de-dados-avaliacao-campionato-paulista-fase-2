@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.fatec.campeonatopaulista.models.Resultado;
 import com.fatec.campeonatopaulista.models.ResultadosDoGrupo;
 import com.fatec.campeonatopaulista.persistence.ResultadoDAO;
 
@@ -30,6 +31,20 @@ public class ResultadoService {
                 .of("A", "B", "C", "D")
                 .stream()
                 .map(paraResultados)
+                .collect(Collectors.toList());
+    }
+
+    public List<Resultado> listarResultadosGerais() {
+        return resultadoDAO.procurarResultadosGerais();
+    }
+
+    public List<String> listarTimesRebaixados() {
+        var resultados = resultadoDAO.procurarResultadosGerais();
+        var size = resultados.size();
+        return resultados
+                .subList(size - 2, size)
+                .stream()
+                .map(Resultado::getTime)
                 .collect(Collectors.toList());
     }
 }

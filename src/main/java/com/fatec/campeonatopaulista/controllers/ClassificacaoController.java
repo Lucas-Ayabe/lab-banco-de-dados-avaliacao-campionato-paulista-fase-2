@@ -1,6 +1,7 @@
 package com.fatec.campeonatopaulista.controllers;
 
 import com.fatec.campeonatopaulista.services.GrupoService;
+import com.fatec.campeonatopaulista.services.ResultadoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/classificacao")
 @Controller
 public class ClassificacaoController {
-	@Qualifier("sqlServerGrupoService")
-	private GrupoService grupoService;
+	private ResultadoService resultadoService;
 
 	@Autowired
-	public ClassificacaoController(GrupoService grupoService) {
-		this.grupoService = grupoService;
+	public ClassificacaoController(ResultadoService resultadoService) {
+		this.resultadoService = resultadoService;
 	}
 
 	@GetMapping("/geral")
 	protected String listarResultados(Model model) {
-		var times = this.grupoService.listarGrupos().get(0).getTimes();
-		model.addAttribute("times", times);
+		model.addAttribute("times", resultadoService.listarResultadosGerais());
 		return "classificacao-geral";
 	}
 

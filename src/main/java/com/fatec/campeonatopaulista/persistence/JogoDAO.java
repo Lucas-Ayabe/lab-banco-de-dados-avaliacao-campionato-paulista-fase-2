@@ -6,9 +6,13 @@ import java.util.List;
 import com.fatec.campeonatopaulista.models.Jogo;
 
 public interface JogoDAO {
-	public List<Jogo> findAllByDate(String date);
+	public List<Jogo> encontrarTodosPelaData(String date);
 
-	public List<Jogo> findAll();
+	public List<Jogo> encontrarTodos();
 
-	public void sort() throws SQLException;
+	public List<Jogo> listarQuartasDeFinal();
+
+	public void atualizarResultado(int codigo, int golsDoTimeA, int golsDosTimesB);
+
+	public void embaralhar() throws SQLException;
 }
