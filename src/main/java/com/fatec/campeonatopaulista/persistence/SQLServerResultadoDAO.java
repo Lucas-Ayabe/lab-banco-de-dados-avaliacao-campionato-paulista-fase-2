@@ -63,7 +63,7 @@ public class SQLServerResultadoDAO implements ResultadoDAO {
 
 	@Override
 	public List<Resultado> procurarResultadosPorGrupo(String grupo) {
-		var sql = "SELECT * FROM dbo.fn_calcular_resultados_do_grupo(?)";
+		var sql = "SELECT * FROM dbo.fn_calcular_resultados_do_grupo(?) ORDER BY pontos DESC, vitorias DESC, gols_marcados DESC, saldo_gols DESC";
 		try (var stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, grupo);
 			return mapearLinhasEmResultados(stmt.executeQuery());
